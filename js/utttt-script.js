@@ -456,13 +456,13 @@ const AIplayer = function() {
             for (let i = 0; i < emptySpotsInLoBoards[o].length; i++) {
                 loBoards[openBoards[o]][emptySpotsInLoBoards[o][i]] = 'O'
                 let move = {gloIndex: openBoards[o], loIndex: emptySpotsInLoBoards[o][i]}
-                let result = minimax(move, loBoards, humPlayer, 0, -Infinity, Infinity, 4)
+                let result = minimax(move, loBoards, humPlayer, 0, -Infinity, Infinity, 6)
                 move.score = result.score
                 loBoards[openBoards[o]][emptySpotsInLoBoards[o][i]] = emptySpotsInLoBoards[o][i]
                 moves.push(move)
             }
         }
-        console.log(moves)
+        // console.log(moves)
         let bestScore = Infinity;
         let bestMove
         for (let move of moves) {
@@ -471,7 +471,7 @@ const AIplayer = function() {
                 bestMove = move
             }
         }
-        console.log(bestMove)
+        // console.log(bestMove)
         let gloIndex = bestMove.gloIndex
         let loIndex = bestMove.loIndex
         loBoards[gloIndex][loIndex] = 'O'
