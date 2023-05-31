@@ -403,7 +403,6 @@ const cellChanges = function (nextBoard, index) {
             ttts[index].children[i].classList.remove('cellNA')
         }
     }
-
     if (nextBoard.firstElementChild.classList.contains('cellW') || nextBoard.firstElementChild.classList.contains('cell2W')) {
         cellNAs = document.querySelectorAll('.cellNA');
         for (let cellNA of cellNAs) {
@@ -422,11 +421,8 @@ for (let cell of cells) {
                 lastMove.id = '';
             }}catch{};
             cell.id = 'lastMove';
-        
-
 
         let targetBoard = cell.parentElement;
-
         for (let i = 0; i < main.children.length; i++) {
             if (main.children[i] === targetBoard) {
                 gloIndex = i;
@@ -460,15 +456,12 @@ for (let cell of cells) {
         gloBoardIndex(loIndex)
 
         lastBoards = [...openBoards]
-
         if (turn % 2 != 0) {
             console.log(humPlayer, evalBoard(lastBoards, loBoards))
         } else {
             console.log(comPlayer, evalBoard(lastBoards, loBoards))
         }
-
         openBoards = emptyGloIndices(gloBoard)
-
         AIplayer()     
     })
     
