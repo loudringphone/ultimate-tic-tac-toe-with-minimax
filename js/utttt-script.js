@@ -155,7 +155,7 @@ const minimax = function(mo, los, player, depth, alpha, beta, maxDepth) {
 const evalBoard = function(current, los) {
     const allWinningCombos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
     const positionScores = [0.3, 0.2, 0.3, 0.2, 0.4, 0.2, 0.3, 0.2, 0.3];
-    const gloPosMuliplier = [1.4, 1, 1.4, 1, 1.75, 1, 1.4, 1, 1.4];
+    const loBoardMulipliers = [1.35, 1, 1.35, 1, 1.7, 1, 1.35, 1, 1.35];
     function rowScore(arr) {
         let oCount = 0;
         let xCount = 0;
@@ -226,15 +226,15 @@ const evalBoard = function(current, los) {
         for (let j = 0; j < 9; j++) {
             if(los[i][j] == comPlayer) {
                 if (i == current) {
-                    score = score - positionScores[j] * 1.5 * gloPosMuliplier[i]
+                    score = score - positionScores[j] * 1.5 * loBoardMulipliers[i]
                 } else {
-                    score = score - positionScores[j] * gloPosMuliplier[i]
+                    score = score - positionScores[j] * loBoardMulipliers[i]
                 }
             } else if (los[i][j] == humPlayer) {
                 if (i == current) {
-                    score = score + positionScores[j] * 1.5 * gloPosMuliplier[i]
+                    score = score + positionScores[j] * 1.5 * loBoardMulipliers[i]
                 } else {
-                    score = score + positionScores[j] * gloPosMuliplier[i]
+                    score = score + positionScores[j] * loBoardMulipliers[i]
                 }
             }
         }
@@ -248,16 +248,16 @@ const evalBoard = function(current, los) {
                 if ((combo[0] === 0 && combo[1] === 4 && combo[2] === 8) || (combo[0] === 2 && combo[1] === 4 && combo[2] === 6)) {
                     if (rowScore(loArr) == 6 || rowScore(loArr) == -6) {
                         if (i == current) {
-                            score = score + rowScore(loArr) * 1.2 * 1.5 * gloPosMuliplier[i]
+                            score = score + rowScore(loArr) * 1.2 * 1.5 * loBoardMulipliers[i]
                         } else {
-                            score = score + rowScore(loArr) * 1.2 * gloPosMuliplier[i]
+                            score = score + rowScore(loArr) * 1.2 * loBoardMulipliers[i]
                         }
                     }
                 } else {
                     if (i == current) {
-                        score = score + rowScore(loArr) * 1.5 * gloPosMuliplier[i]
+                        score = score + rowScore(loArr) * 1.5 * loBoardMulipliers[i]
                     } else {
-                        score = score + rowScore(loArr) * gloPosMuliplier[i]
+                        score = score + rowScore(loArr) * loBoardMulipliers[i]
                     }
                 }
                 scores.push(rowScore(loArr))
@@ -284,6 +284,59 @@ const evalBoard = function(current, los) {
 
     return score
 }
+
+
+
+const AIplayer = function() {
+    if (turn % 2 != 0) {
+        let emptySpotsInLoBoards = emptyLoIndices(openBoards, loBoards);
+        // let moves = []
+        let minimumScore = Infinity;
+        let bestMove
+        for (let o = 0; o < openBoards.length; o++) {
+            for (let i = 0; i < emptySpotsInLoBoards[o].length; i++) {
+                loBoards[openBoards[o]][emptySpotsInLoBoards[o][i]] = 'O'
+                let move = {gloIndex: openBoards[o], loIndex: emptySpotsInLoBoards[o][i]}
+                let result = minimax(move, loBoards, humPlayer, 0, -Infinity, Infinity, 6)
+                move.score = result.score
+                loBoards[openBoards[o]][emptySpotsInLoBoards[o][i]] = emptySpotsInLoBoards[o][i]
+                // moves.push(move)
+                if (move.score < minimumScore) {
+                    minimumScore = move.score;
+                    bestMove = move;
+                }
+            }
+        }
+        // console.log(moves)
+        // for (let move of moves) {
+        //     if (move.score < minimumScore) {
+        //         minimumScore = move.score
+        //         bestMove = move
+        //     }
+        // }
+        // console.log(bestMove)
+        let gloIndex = bestMove.gloIndex
+        let loIndex = bestMove.loIndex
+        loBoards[gloIndex][loIndex] = 'O'
+        ttts[gloIndex].children[loIndex].textContent = 'O';
+        ttts[gloIndex].children[loIndex].classList.add('markO')
+        lastMove = document.querySelector('#lastMove');;
+        try {if (lastMove.id != null) {
+            lastMove.id = '';
+        }}catch{};
+        ttts[gloIndex].children[loIndex].id = 'lastMove';
+    
+        cells.forEach(target =>
+            target.classList.toggle('cell2'))
+
+        nextBoard = main.children[loIndex];
+        cellChanges(nextBoard, gloIndex)
+        gloBoardIndex(loIndex)
+        turn++
+    }
+}
+
+//---------------------------------- Above is the minimax and evaluation board------------------------------------------------------------//
 
 const main = document.querySelector('.main-content');
 const ttts = document.querySelectorAll('.TTT');
@@ -448,47 +501,3 @@ for (let cell of cells) {
 
 
 
-const AIplayer = function() {
-    if (turn % 2 != 0) {
-        let emptySpotsInLoBoards = emptyLoIndices(openBoards, loBoards);
-        let moves = []
-        for (let o = 0; o < openBoards.length; o++) {
-            for (let i = 0; i < emptySpotsInLoBoards[o].length; i++) {
-                loBoards[openBoards[o]][emptySpotsInLoBoards[o][i]] = 'O'
-                let move = {gloIndex: openBoards[o], loIndex: emptySpotsInLoBoards[o][i]}
-                let result = minimax(move, loBoards, humPlayer, 0, -Infinity, Infinity, 6)
-                move.score = result.score
-                loBoards[openBoards[o]][emptySpotsInLoBoards[o][i]] = emptySpotsInLoBoards[o][i]
-                moves.push(move)
-            }
-        }
-        // console.log(moves)
-        let bestScore = Infinity;
-        let bestMove
-        for (let move of moves) {
-            if (move.score < bestScore) {
-                bestScore = move.score
-                bestMove = move
-            }
-        }
-        // console.log(bestMove)
-        let gloIndex = bestMove.gloIndex
-        let loIndex = bestMove.loIndex
-        loBoards[gloIndex][loIndex] = 'O'
-        ttts[gloIndex].children[loIndex].textContent = 'O';
-        ttts[gloIndex].children[loIndex].classList.add('markO')
-        lastMove = document.querySelector('#lastMove');;
-        try {if (lastMove.id != null) {
-            lastMove.id = '';
-        }}catch{};
-        ttts[gloIndex].children[loIndex].id = 'lastMove';
-    
-        cells.forEach(target =>
-            target.classList.toggle('cell2'))
-
-        nextBoard = main.children[loIndex];
-        cellChanges(nextBoard, gloIndex)
-        gloBoardIndex(loIndex)
-        turn++
-    }
-}
