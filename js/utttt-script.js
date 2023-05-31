@@ -12,7 +12,6 @@ let humPlayer = 'X';
 const emptyGloIndices = function(gloBoard) {
     return gloBoard.filter (s => s != 'X' && s != 'O' && s != 'D' && s != 'NA');
 }
-// console.log(emptyGloIndices(gloBoard))
 const emptyLoIndices = function(openBoards, loBoards) {
     const emptySpots = [];
     for (let i = 0; i < openBoards.length; i++) {
@@ -24,7 +23,6 @@ const emptyLoIndices = function(openBoards, loBoards) {
     }
     return emptySpots;
 }
-// console.log(emptyLoIndices(loBoards))
 
 // winning combinations using the board indices
 const winning = function(board, player) {
@@ -44,18 +42,12 @@ const winning = function(board, player) {
     }
 }
 
-function allXorO(board) {
+const allXorO = function(board) {
     if (Array.isArray(board)) {
         return board.every((cell) => cell === 'X' || cell === 'O');
     }
   }
 
-
-
-
- 
-
-let bestAImove;
 const minimax = function(mo, los, player, depth, alpha, beta, maxDepth) {
     let score = evalBoard(mo.gloIndex, los)
     if (depth == maxDepth) {
@@ -100,8 +92,6 @@ const minimax = function(mo, los, player, depth, alpha, beta, maxDepth) {
         return {score: score};
     }
     let emptySpotsInLoBoards = emptyLoIndices(openBoardsMinimax, los);
-     // an array to collect all the objects
-     
 
     if (player == humPlayer) {
         let maxVal = -Infinity;
@@ -112,7 +102,6 @@ const minimax = function(mo, los, player, depth, alpha, beta, maxDepth) {
                 let move = {gloIndex: openBoardsMinimax[o], loIndex: emptySpotsInLoBoards[o][i]}
                 let result = minimax(move, los, comPlayer, depth+1, alpha, beta, maxDepth)
                 move.score = result.score
-                
                 los[openBoardsMinimax[o]][emptySpotsInLoBoards[o][i]] = emptySpotsInLoBoards[o][i]
                 if (move.score > maxVal) {
                     maxVal = move.score
@@ -145,12 +134,9 @@ const minimax = function(mo, los, player, depth, alpha, beta, maxDepth) {
                 }
             }
         }
-        
         return bestMove
     }
 }
-
-
 
 const evalBoard = function(current, los) {
     const allWinningCombos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
@@ -171,7 +157,6 @@ const evalBoard = function(current, los) {
             numCount++;
           }
         }
-        
        
         if (oCount === 3) {
             return -12
@@ -194,9 +179,8 @@ const evalBoard = function(current, los) {
         else {
             return 0
         }
-       
-        
     }
+
     let score = 0
     let glo = [];
    
@@ -215,6 +199,7 @@ const evalBoard = function(current, los) {
             glo[i] = i
         }
     }
+
     if (winning(glo, comPlayer)){
         score = score - 50000
      }
@@ -239,8 +224,6 @@ const evalBoard = function(current, los) {
             }
         }
 
-        
-
         let scores = []
         for (let combo of allWinningCombos) {
             let loArr = [los[i][combo[0]], los[i][combo[1]], los[i][combo[2]]]
@@ -264,8 +247,6 @@ const evalBoard = function(current, los) {
             }
         }
     }
-       
-        
     
     let scores = []
     for (let combo of allWinningCombos) {
@@ -284,8 +265,6 @@ const evalBoard = function(current, los) {
 
     return score
 }
-
-
 
 const AIplayer = function() {
     if (turn % 2 != 0) {
@@ -461,8 +440,6 @@ for (let cell of cells) {
 
         turn++
 
-        
-
         if (turn % 2 != 0) {
             loBoards[gloIndex][loIndex] = 'X';
             cell.textContent = 'X';
@@ -480,7 +457,6 @@ for (let cell of cells) {
         nextBoard = main.children[loIndex];
         
         cellChanges(nextBoard, gloIndex)
-
         gloBoardIndex(loIndex)
 
         lastBoards = [...openBoards]
@@ -493,11 +469,7 @@ for (let cell of cells) {
 
         openBoards = emptyGloIndices(gloBoard)
 
-
         AIplayer()     
     })
     
 };
-
-
-
