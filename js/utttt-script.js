@@ -141,7 +141,7 @@ const minimax = function(mo, los, player, depth, alpha, beta, maxDepth) {
 const evalBoard = function(current, los) {
     const allWinningCombos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
     const positionScores = [0.3, 0.2, 0.3, 0.2, 0.4, 0.2, 0.3, 0.2, 0.3];
-    const loBoardMulipliers = [1.35, 1, 1.35, 1, 1.7, 1, 1.35, 1, 1.35];
+    const loBoardWeightings = [1.35, 1, 1.35, 1, 1.7, 1, 1.35, 1, 1.35];
     function rowScore(arr) {
         let oCount = 0;
         let xCount = 0;
@@ -211,15 +211,15 @@ const evalBoard = function(current, los) {
         for (let j = 0; j < 9; j++) {
             if(los[i][j] == comPlayer) {
                 if (i == current) {
-                    score = score - positionScores[j] * 1.5 * loBoardMulipliers[i]
+                    score = score - positionScores[j] * 1.5 * loBoardWeightings[i]
                 } else {
-                    score = score - positionScores[j] * loBoardMulipliers[i]
+                    score = score - positionScores[j] * loBoardWeightings[i]
                 }
             } else if (los[i][j] == humPlayer) {
                 if (i == current) {
-                    score = score + positionScores[j] * 1.5 * loBoardMulipliers[i]
+                    score = score + positionScores[j] * 1.5 * loBoardWeightings[i]
                 } else {
-                    score = score + positionScores[j] * loBoardMulipliers[i]
+                    score = score + positionScores[j] * loBoardWeightings[i]
                 }
             }
         }
@@ -231,16 +231,16 @@ const evalBoard = function(current, los) {
                 if ((combo[0] === 0 && combo[1] === 4 && combo[2] === 8) || (combo[0] === 2 && combo[1] === 4 && combo[2] === 6)) {
                     if (rowScore(loArr) == 6 || rowScore(loArr) == -6) {
                         if (i == current) {
-                            score = score + rowScore(loArr) * 1.2 * 1.5 * loBoardMulipliers[i]
+                            score = score + rowScore(loArr) * 1.2 * 1.5 * loBoardWeightings[i]
                         } else {
-                            score = score + rowScore(loArr) * 1.2 * loBoardMulipliers[i]
+                            score = score + rowScore(loArr) * 1.2 * loBoardWeightings[i]
                         }
                     }
                 } else {
                     if (i == current) {
-                        score = score + rowScore(loArr) * 1.5 * loBoardMulipliers[i]
+                        score = score + rowScore(loArr) * 1.5 * loBoardWeightings[i]
                     } else {
-                        score = score + rowScore(loArr) * loBoardMulipliers[i]
+                        score = score + rowScore(loArr) * loBoardWeightings[i]
                     }
                 }
                 scores.push(rowScore(loArr))
@@ -299,7 +299,7 @@ const AIplayer = function() {
         loBoards[gloIndex][loIndex] = 'O'
         ttts[gloIndex].children[loIndex].textContent = 'O';
         ttts[gloIndex].children[loIndex].classList.add('markO')
-        lastMove = document.querySelector('#lastMove');;
+        let lastMove = document.querySelector('#lastMove');;
         try {if (lastMove.id != null) {
             lastMove.id = '';
         }}catch{};
@@ -308,7 +308,7 @@ const AIplayer = function() {
         cells.forEach(target =>
             target.classList.toggle('cell2'))
 
-        nextBoard = main.children[loIndex];
+        let nextBoard = main.children[loIndex];
         cellChanges(nextBoard, gloIndex)
         gloBoardIndex(loIndex)
         turn++
@@ -322,8 +322,6 @@ const ttts = document.querySelectorAll('.TTT');
 const cells = document.querySelectorAll('.cell');
 let cell2s = document.querySelectorAll('.cell2');
 let cellNAs = document.querySelectorAll('cellNA');
-let p1played = [];
-let p2played = [];
 let markXs = document.querySelectorAll('.markX');
 let markOs = document.querySelectorAll('.markO');
 let turn = 0;
@@ -331,21 +329,6 @@ let gloIndex;
 let loIndex;
 
 
-const toggleCell2 = function() {
-    cells = document.querySelectorAll('.cell');
-    cellNAs = document.querySelectorAll('.cellNA');
-    if (p1played.length > p2played.length) {
-    cellNAs.forEach(target =>
-        target.classList.add('cell2'));
-    cells.forEach(target =>
-        target.classList.add('cell2'));
-    } else {
-        cellNAs.forEach(target =>
-        target.classList.remove('cell2'));
-    cells.forEach(target =>
-        target.classList.remove('cell2'));
-    }
-}
 
 const gloBoardIndex = function(nextBoardIndex) {
     for (let i = 0; i < 9; i++) {
@@ -450,7 +433,7 @@ for (let cell of cells) {
             cells.forEach(target =>
                 target.classList.toggle('cell2'))
         }
-        nextBoard = main.children[loIndex];
+        let nextBoard = main.children[loIndex];
         
         cellChanges(nextBoard, gloIndex)
         gloBoardIndex(loIndex)
