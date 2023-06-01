@@ -316,13 +316,13 @@ const AIplayer = function() {
 
         if (winning(gloBoard, comPlayer) || winning(gloBoard, humPlayer)){
             for (let i = 0; i < main.children.length; i++) {
-                markXs = document.querySelectorAll('markX');
-                markOs = document.querySelectorAll('markO');
+                if (typeof gloBoard[i] == 'number') {
                     for (let j = 0; j < 9; j++) {
                         if (!main.children[i].children[j].classList.contains('markX') && !main.children[i].children[j].classList.contains('markO')) {
                             main.children[i].children[j].classList.add('cellNA');  
                         }
                     }
+                }
             }
         }
     }
@@ -461,13 +461,13 @@ for (let cell of cells) {
 
         if (winning(gloBoard, comPlayer) || winning(gloBoard, humPlayer)){
             for (let i = 0; i < main.children.length; i++) {
-                markXs = document.querySelectorAll('markX');
-                markOs = document.querySelectorAll('markO');
+                if (typeof gloBoard[i] == 'number') {
                     for (let j = 0; j < 9; j++) {
                         if (!main.children[i].children[j].classList.contains('markX') && !main.children[i].children[j].classList.contains('markO')) {
                             main.children[i].children[j].classList.add('cellNA');  
                         }
                     }
+                }
             }
         } else {
             AIplayer()     
