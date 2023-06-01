@@ -311,7 +311,20 @@ const AIplayer = function() {
         let nextBoard = main.children[loIndex];
         cellChanges(nextBoard, gloIndex)
         gloBoardIndex(loIndex)
+        
         turn++
+
+        if (winning(gloBoard, comPlayer) || winning(gloBoard, humPlayer)){
+            for (let i = 0; i < main.children.length; i++) {
+                markXs = document.querySelectorAll('markX');
+                markOs = document.querySelectorAll('markO');
+                    for (let j = 0; j < 9; j++) {
+                        if (!main.children[i].children[j].classList.contains('markX') && !main.children[i].children[j].classList.contains('markO')) {
+                            main.children[i].children[j].classList.add('cellNA');  
+                        }
+                    }
+            }
+        }
     }
 }
 
@@ -445,7 +458,20 @@ for (let cell of cells) {
             console.log(comPlayer, evalBoard(lastBoards, loBoards))
         }
         openBoards = emptyGloIndices(gloBoard)
-        AIplayer()     
+
+        if (winning(gloBoard, comPlayer) || winning(gloBoard, humPlayer)){
+            for (let i = 0; i < main.children.length; i++) {
+                markXs = document.querySelectorAll('markX');
+                markOs = document.querySelectorAll('markO');
+                    for (let j = 0; j < 9; j++) {
+                        if (!main.children[i].children[j].classList.contains('markX') && !main.children[i].children[j].classList.contains('markO')) {
+                            main.children[i].children[j].classList.add('cellNA');  
+                        }
+                    }
+            }
+        } else {
+            AIplayer()     
+        }
     })
     
 };
