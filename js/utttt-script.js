@@ -266,6 +266,8 @@ const evalBoard = function(current, los) {
     return score
 }
 
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+alert (isMobile)
 const AIplayer = function() {
     if (turn % 2 != 0) {
         let emptySpotsInLoBoards = emptyLoIndices(openBoards, loBoards);
