@@ -267,7 +267,6 @@ const evalBoard = function(current, los) {
 }
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-alert (isMobile)
 const AIplayer = function() {
     if (turn % 2 != 0) {
         let emptySpotsInLoBoards = emptyLoIndices(openBoards, loBoards);
@@ -278,7 +277,13 @@ const AIplayer = function() {
             for (let i = 0; i < emptySpotsInLoBoards[o].length; i++) {
                 loBoards[openBoards[o]][emptySpotsInLoBoards[o][i]] = 'O'
                 let move = {gloIndex: openBoards[o], loIndex: emptySpotsInLoBoards[o][i]}
-                let result = minimax(move, loBoards, humPlayer, 0, -Infinity, Infinity, 6)
+                let result;
+                if (isMobile) {
+                    result = minimax(move, loBoards, humPlayer, 0, -Infinity, Infinity, 4)
+                } else {
+                    result = minimax(move, loBoards, humPlayer, 0, -Infinity, Infinity, 6)
+                }
+                 
                 move.score = result.score
                 loBoards[openBoards[o]][emptySpotsInLoBoards[o][i]] = emptySpotsInLoBoards[o][i]
                 // moves.push(move)
