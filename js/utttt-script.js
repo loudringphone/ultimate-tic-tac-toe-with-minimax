@@ -48,8 +48,8 @@ const allXorO = function(board) {
     }
   }
 
-const minimax = function(mo, los, player, depth, alpha, beta, maxDepth) {
-    let score = evalBoard(mo.gloIndex, los)
+const minimax = function(gloMo, loMo, los, player, depth, alpha, beta, maxDepth) {
+    let score = evalBoard(gloMo, los)
     if (depth == maxDepth) {
         return {score: score};
     }
@@ -76,7 +76,7 @@ const minimax = function(mo, los, player, depth, alpha, beta, maxDepth) {
         return {score: 100000 - depth};
     }
 
-    if (typeof gloBoardMinimax[mo.loIndex] === 'number' || gloBoardMinimax[mo.loIndex] === 'NA') {
+    if (typeof gloBoardMinimax[loMo] === 'number' || gloBoardMinimax[loMo] === 'NA') {
         for (let j = 0; j < 9; j++) {
             if (typeof gloBoardMinimax[j] === 'number') {
                 gloBoardMinimax[j] = 'NA'
@@ -84,8 +84,8 @@ const minimax = function(mo, los, player, depth, alpha, beta, maxDepth) {
         }
     }
     
-    if (gloBoardMinimax[mo.loIndex] === 'NA') {
-        gloBoardMinimax[mo.loIndex] = mo.loIndex
+    if (gloBoardMinimax[loMo] === 'NA') {
+        gloBoardMinimax[loMo] = loMo
     }
     let openBoardsMinimax = emptyGloIndices(gloBoardMinimax)
     if (openBoardsMinimax.length == 0) {
@@ -98,14 +98,14 @@ const minimax = function(mo, los, player, depth, alpha, beta, maxDepth) {
         let bestMove
         for (let o = 0; o < openBoardsMinimax.length; o++) {
             for (let i = 0; i < emptySpotsInLoBoards[o].length; i++) {
-                los[openBoardsMinimax[o]][emptySpotsInLoBoards[o][i]] = 'X'
-                let move = {gloIndex: openBoardsMinimax[o], loIndex: emptySpotsInLoBoards[o][i]}
-                let result = minimax(move, los, comPlayer, depth+1, alpha, beta, maxDepth)
-                move.score = result.score
-                los[openBoardsMinimax[o]][emptySpotsInLoBoards[o][i]] = emptySpotsInLoBoards[o][i]
+                let gloMove = openBoardsMinimax[o]
+                let loMove = emptySpotsInLoBoards[o][i]
+                los[gloMove][loMove] = 'X'
+                let move = minimax(gloMove, loMove, los, comPlayer, depth+1, alpha, beta, maxDepth)
+                los[gloMove][loMove] = loMove
                 if (move.score > maxVal) {
                     maxVal = move.score
-                    bestMove = move
+                    bestMove = {gloIndex: gloMove, loIndex: loMove, score: move.score}
                 }
                 alpha = Math.max(alpha, maxVal);
                 if(beta <= alpha){
@@ -119,14 +119,14 @@ const minimax = function(mo, los, player, depth, alpha, beta, maxDepth) {
         let bestMove
         for (let o = 0; o < openBoardsMinimax.length; o++) {
             for (let i = 0; i < emptySpotsInLoBoards[o].length; i++) {
-                los[openBoardsMinimax[o]][emptySpotsInLoBoards[o][i]] = 'O'
-                let move = {gloIndex: openBoardsMinimax[o], loIndex: emptySpotsInLoBoards[o][i]}
-                let result = minimax(move, los, humPlayer, depth+1, alpha, beta, maxDepth)
-                move.score = result.score
-                los[openBoardsMinimax[o]][emptySpotsInLoBoards[o][i]] = emptySpotsInLoBoards[o][i]
+                let gloMove = openBoardsMinimax[o]
+                let loMove = emptySpotsInLoBoards[o][i]
+                los[gloMove][loMove] = 'O'
+                let move = minimax(gloMove, loMove, los, humPlayer, depth+1, alpha, beta, maxDepth)
+                los[gloMove][loMove] = loMove
                 if (move.score < minVal) {
                     minVal = move.score
-                    bestMove = move
+                    bestMove = {gloIndex: gloMove, loIndex: loMove, score: move.score}
                 }
                 beta = Math.min(beta, minVal);
                 if(beta <= alpha){
@@ -224,45 +224,46 @@ const evalBoard = function(current, los) {
             }
         }
 
-        let scores = []
+        let RawScores = new Set();
         for (let combo of allWinningCombos) {
-            let loArr = [los[i][combo[0]], los[i][combo[1]], los[i][combo[2]]]
-            if (!scores.includes(rowScore(loArr))) {
+            let loArr = [los[i][combo[0]], los[i][combo[1]], los[i][combo[2]]];
+            let rowScoreVal = rowScore(loArr);
+            if (!RawScores.has(rowScoreVal)) {
                 if ((combo[0] === 0 && combo[1] === 4 && combo[2] === 8) || (combo[0] === 2 && combo[1] === 4 && combo[2] === 6)) {
-                    if (rowScore(loArr) == 6 || rowScore(loArr) == -6) {
-                        if (i == current) {
-                            score = score + rowScore(loArr) * 1.2 * 1.5 * loBoardWeightings[i]
+                    if (rowScoreVal === 6 || rowScoreVal === -6) {
+                        if (i === current) {
+                            score += rowScoreVal * 1.2 * 1.5 * loBoardWeightings[i];
                         } else {
-                            score = score + rowScore(loArr) * 1.2 * loBoardWeightings[i]
+                            score += rowScoreVal * 1.2 * loBoardWeightings[i];
                         }
                     }
                 } else {
-                    if (i == current) {
-                        score = score + rowScore(loArr) * 1.5 * loBoardWeightings[i]
+                    if (i === current) {
+                        score += rowScoreVal * 1.5 * loBoardWeightings[i];
                     } else {
-                        score = score + rowScore(loArr) * loBoardWeightings[i]
+                        score += rowScoreVal * loBoardWeightings[i];
                     }
                 }
-                scores.push(rowScore(loArr))
+                RawScores.add(rowScoreVal);
             }
         }
     }
     
-    let scores = []
+    let rawScores = new Set();
     for (let combo of allWinningCombos) {
-        let gloArr = [glo[combo[0]], glo[combo[1]], glo[combo[2]]]
-        if (!scores.includes(rowScore(gloArr))) {
+        let gloArr = [glo[combo[0]], glo[combo[1]], glo[combo[2]]];
+        let rowScoreVal = rowScore(gloArr);
+        if (!rawScores.has(rowScoreVal)) {
             if ((combo[0] === 0 && combo[1] === 4 && combo[2] === 8) || (combo[0] === 2 && combo[1] === 4 && combo[2] === 6)) {
-                if (rowScore(gloArr) == 6 || rowScore(gloArr) == -6) {
-                    score = score + rowScore(gloArr) * 1.2 * 150
+                if (rowScoreVal === 6 || rowScoreVal === -6) {
+                    score += rowScoreVal * 1.2 * 150;
                 }
             } else {
-                score = score + rowScore(gloArr) * 150
+                score += rowScoreVal * 150;
             }
-            scores.push(rowScore(gloArr))
+            rawScores.add(rowScoreVal);
         }
     }
-
     return score
 }
 
@@ -275,21 +276,20 @@ const AIplayer = function() {
         let bestMove
         for (let o = 0; o < openBoards.length; o++) {
             for (let i = 0; i < emptySpotsInLoBoards[o].length; i++) {
-                loBoards[openBoards[o]][emptySpotsInLoBoards[o][i]] = 'O'
-                let move = {gloIndex: openBoards[o], loIndex: emptySpotsInLoBoards[o][i]}
-                let result;
+                let gloMove = openBoards[o]
+                let loMove = emptySpotsInLoBoards[o][i]
+                loBoards[gloMove][loMove] = 'O'
+                let move;
                 if (isMobile) {
-                    result = minimax(move, loBoards, humPlayer, 0, -Infinity, Infinity, 4)
+                    move = minimax(gloMove, loMove, loBoards, humPlayer, 0, -Infinity, Infinity, 4)
                 } else {
-                    result = minimax(move, loBoards, humPlayer, 0, -Infinity, Infinity, 6)
+                    move = minimax(gloMove, loMove, loBoards, humPlayer, 0, -Infinity, Infinity, 6)
                 }
-                 
-                move.score = result.score
-                loBoards[openBoards[o]][emptySpotsInLoBoards[o][i]] = emptySpotsInLoBoards[o][i]
+                loBoards[gloMove][loMove] = loMove
                 // moves.push(move)
                 if (move.score < minimumScore) {
                     minimumScore = move.score;
-                    bestMove = move;
+                    bestMove = {gloIndex: gloMove, loIndex: loMove, score: move.score};
                 }
             }
         }
