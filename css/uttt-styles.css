@@ -1,5 +1,6 @@
 * {
     user-select: none;
+    font-family: fantasy;
 }
 
 body {
@@ -8,11 +9,62 @@ body {
     font-family: 'Raleway', Arial, Helvetica, sans-serif;
     font-weight: bold;
     background-color: beige;
+    text-align: -webkit-center;
+    position: relative;
+}
+#result {
+    margin-top: 15%;
+    font-size: x-large;
+}
+#rules-btn {
+    margin-top: 5%;
+    font-size: x-large;
+    background: transparent;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+}
+#rules-close {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    transform: translate(-50%, -50%);
+    line-height: 150%;
+    margin: auto;
+    z-index: 3;
+    font-size:xx-large;
+    cursor: pointer;
+    display: none;
+}
+#rules {
+    width: 100%;
+    height: 100%;
+    text-align: -webkit-left;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 150%;
+    margin: auto;
+    z-index: 2;
+    background-color: rgba(211, 211, 211, 0.95);
+    display: flex;
+    align-items: center;
+    place-content: center;
+    user-select: text;
+    display: none;
+}
+
+#rules p {
+    font-weight: bold;
+    font-size: medium;
+    width: 80%;
+    line-height: 200%;
+    user-select: text;
 }
 
 .container {
     display: grid;
-    
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     grid-gap: 0px; 

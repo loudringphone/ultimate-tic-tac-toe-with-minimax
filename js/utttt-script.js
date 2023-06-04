@@ -331,6 +331,11 @@ const AIplayer = function() {
                     }
                 }
             }
+            if (winning(gloBoard, comPlayer)) {
+                result.textContent = "Player O wins!"
+            } else {
+                result.textContent = "Player X wins!"
+            }
         }
     }
 }
@@ -347,7 +352,7 @@ let markOs = document.querySelectorAll('.markO');
 let turn = 0;
 let gloIndex;
 let loIndex;
-
+const result = document.querySelector('#result');
 
 
 const gloBoardIndex = function(nextBoardIndex) {
@@ -476,9 +481,26 @@ for (let cell of cells) {
                     }
                 }
             }
+            if (winning(gloBoard, comPlayer)) {
+                result.textContent = "Player O wins!"
+            } else {
+                result.textContent = "Player X wins!"
+            }
         } else {
             AIplayer()     
         }
     })
     
 };
+
+const rulesBtn = document.querySelector('#rules-btn')
+const rules = document.querySelector('#rules')
+const rulesClose = document.querySelector('#rules-close')
+rulesBtn.addEventListener('click', function() {
+    rules.style.display = "flex"
+    rulesClose.style.display = "flex"
+})
+rulesClose.addEventListener('click', function() {
+    rules.style.display = "none"
+    rulesClose.style.display = "none"
+})
