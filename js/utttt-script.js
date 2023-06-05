@@ -204,7 +204,7 @@ const evalBoard = function(current, los) {
         score = score - 50000
      }
        else if (winning(glo, humPlayer)){
-        score = score + 50000
+        score = score + 50000 
     }
 
     for (let i = 0; i < 9; i++) {
@@ -333,8 +333,10 @@ const AIplayer = function() {
             }
             if (winning(gloBoard, comPlayer)) {
                 result.textContent = "Player O wins!"
-            } else {
+            } else if (winning(gloBoard, humPlayer)){
                 result.textContent = "Player X wins!"
+            } else if (allXorO(gloBoard)) {
+                result.textContent = "Draw game!"
             }
         }
     }
@@ -483,8 +485,10 @@ for (let cell of cells) {
             }
             if (winning(gloBoard, comPlayer)) {
                 result.textContent = "Player O wins!"
-            } else {
+            } else if (winning(gloBoard, humPlayer)){
                 result.textContent = "Player X wins!"
+            } else if (allXorO(gloBoard)) {
+                result.textContent = "Draw game!"
             }
         } else {
             AIplayer()     
