@@ -283,7 +283,7 @@ const AIplayer = function() {
                 if (isMobile) {
                     move = minimax(gloMove, loMove, loBoards, humPlayer, 0, -Infinity, Infinity, 4)
                 } else {
-                    move = minimax(gloMove, loMove, loBoards, humPlayer, 0, -Infinity, Infinity, 6)
+                    move = minimax(gloMove, loMove, loBoards, humPlayer, 0, -Infinity, Infinity, 5)
                 }
                 loBoards[gloMove][loMove] = loMove
                 // moves.push(move)
