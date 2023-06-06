@@ -48,8 +48,8 @@ const allXorO = function(board) {
     }
   }
 
-const minimax = function(gloMo, loMo, los, player, depth, alpha, beta, maxDepth) {
-    let score = evalBoard(gloMo, los)
+const minimax = function(mo, los, player, depth, alpha, beta, maxDepth) {
+    let score = evalBoard(mo.gloIndex, los)
     if (depth == maxDepth) {
         return {score: score};
     }
@@ -76,7 +76,7 @@ const minimax = function(gloMo, loMo, los, player, depth, alpha, beta, maxDepth)
         return {score: score - depth};
     }
 
-    if (typeof gloBoardMinimax[loMo] === 'number' || gloBoardMinimax[loMo] === 'NA') {
+    if (typeof gloBoardMinimax[mo.loIndex] === 'number' || gloBoardMinimax[mo.loIndex] === 'NA') {
         for (let j = 0; j < 9; j++) {
             if (typeof gloBoardMinimax[j] === 'number') {
                 gloBoardMinimax[j] = 'NA'
@@ -84,8 +84,8 @@ const minimax = function(gloMo, loMo, los, player, depth, alpha, beta, maxDepth)
         }
     }
     
-    if (gloBoardMinimax[loMo] === 'NA') {
-        gloBoardMinimax[loMo] = loMo
+    if (gloBoardMinimax[mo.loIndex] === 'NA') {
+        gloBoardMinimax[mo.loIndex] = mo.loIndex
     }
     let openBoardsMinimax = emptyGloIndices(gloBoardMinimax)
     if (openBoardsMinimax.length == 0) {
@@ -98,14 +98,15 @@ const minimax = function(gloMo, loMo, los, player, depth, alpha, beta, maxDepth)
         let bestMove
         for (let o = 0; o < openBoardsMinimax.length; o++) {
             for (let i = 0; i < emptySpotsInLoBoards[o].length; i++) {
-                let gloMove = openBoardsMinimax[o]
-                let loMove = emptySpotsInLoBoards[o][i]
-                los[gloMove][loMove] = 'X'
-                let move = minimax(gloMove, loMove, los, comPlayer, depth+1, alpha, beta, maxDepth)
-                los[gloMove][loMove] = loMove
-                if (move.score > maxVal) {
-                    maxVal = move.score
-                    bestMove = {gloIndex: gloMove, loIndex: loMove, score: move.score}
+                let move = {}
+                move.gloIndex = openBoardsMinimax[o]
+                move.loIndex = emptySpotsInLoBoards[o][i]
+                los[move.gloIndex][move.loIndex] = 'X'
+                let result = minimax(move, los, comPlayer, depth+1, alpha, beta, maxDepth)
+                los[move.gloIndex][move.loIndex] = move.loIndex
+                if (result.score > maxVal) {
+                    maxVal = result.score
+                    bestMove = {gloIndex: move.gloIndex, loIndex: move.loIndex, score: result.score}
                 }
                 alpha = Math.max(alpha, maxVal);
                 if(beta <= alpha){
@@ -119,14 +120,15 @@ const minimax = function(gloMo, loMo, los, player, depth, alpha, beta, maxDepth)
         let bestMove
         for (let o = 0; o < openBoardsMinimax.length; o++) {
             for (let i = 0; i < emptySpotsInLoBoards[o].length; i++) {
-                let gloMove = openBoardsMinimax[o]
-                let loMove = emptySpotsInLoBoards[o][i]
-                los[gloMove][loMove] = 'O'
-                let move = minimax(gloMove, loMove, los, humPlayer, depth+1, alpha, beta, maxDepth)
-                los[gloMove][loMove] = loMove
-                if (move.score < minVal) {
-                    minVal = move.score
-                    bestMove = {gloIndex: gloMove, loIndex: loMove, score: move.score}
+                let move = {}
+                move.gloIndex = openBoardsMinimax[o]
+                move.loIndex = emptySpotsInLoBoards[o][i]
+                los[move.gloIndex][move.loIndex] = 'O'
+                let result = minimax(move, los, humPlayer, depth+1, alpha, beta, maxDepth)
+                los[move.gloIndex][move.loIndex] = move.loIndex
+                if (result.score < minVal) {
+                    minVal = result.score
+                    bestMove = {gloIndex: move.gloIndex, loIndex: move.loIndex, score: result.score}
                 }
                 beta = Math.min(beta, minVal);
                 if(beta <= alpha){
@@ -276,20 +278,21 @@ const AIplayer = function() {
         let bestMove
         for (let o = 0; o < openBoards.length; o++) {
             for (let i = 0; i < emptySpotsInLoBoards[o].length; i++) {
-                let gloMove = openBoards[o]
-                let loMove = emptySpotsInLoBoards[o][i]
-                loBoards[gloMove][loMove] = 'O'
-                let move;
+                let move = {}
+                move.gloIndex = openBoards[o]
+                move.loIndex = emptySpotsInLoBoards[o][i]
+                loBoards[move.gloIndex][move.loIndex] = 'O'
+                let result;
                 if (isMobile) {
-                    move = minimax(gloMove, loMove, loBoards, humPlayer, 0, -Infinity, Infinity, 4)
+                    result = minimax(move, loBoards, humPlayer, 0, -Infinity, Infinity, 4)
                 } else {
-                    move = minimax(gloMove, loMove, loBoards, humPlayer, 0, -Infinity, Infinity, 5)
+                    result = minimax(move, loBoards, humPlayer, 0, -Infinity, Infinity, 5)
                 }
-                loBoards[gloMove][loMove] = loMove
+                loBoards[move.gloIndex][move.loIndex] = move.loIndex
                 // moves.push(move)
-                if (move.score < minimumScore) {
-                    minimumScore = move.score;
-                    bestMove = {gloIndex: gloMove, loIndex: loMove, score: move.score};
+                if (result.score < minimumScore) {
+                    minimumScore = result.score;
+                    bestMove = {gloIndex: move.gloIndex, loIndex: move.loIndex, score: result.score};
                 }
             }
         }
@@ -491,7 +494,10 @@ for (let cell of cells) {
                 result.textContent = "Draw game!"
             }
         } else {
-            AIplayer()     
+            console.time('myFunction'); // Start the timer
+            AIplayer() 
+            console.timeEnd('myFunction');
+            // 295.257080078125 ms
         }
     })
     
