@@ -70,10 +70,10 @@ const minimax = function(gloMo, loMo, los, player, depth, alpha, beta, maxDepth)
     }
 
     if (winning(gloBoardMinimax, comPlayer)){
-        return {score: -100000 + depth};
+        return {score: score + depth};
     }
     else if (winning(gloBoardMinimax, humPlayer)){
-        return {score: 100000 - depth};
+        return {score: score - depth};
     }
 
     if (typeof gloBoardMinimax[loMo] === 'number' || gloBoardMinimax[loMo] === 'NA') {
