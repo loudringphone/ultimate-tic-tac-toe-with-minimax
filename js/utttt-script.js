@@ -494,10 +494,7 @@ for (let cell of cells) {
                 result.textContent = "Draw game!"
             }
         } else {
-            console.time('myFunction'); // Start the timer
             AIplayer() 
-            console.timeEnd('myFunction');
-            // 295.257080078125 ms
         }
     })
     
