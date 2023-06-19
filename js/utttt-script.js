@@ -286,7 +286,7 @@ const AIplayer = function() {
                 if (isMobile) {
                     result = minimax(move, loBoards, humPlayer, 0, -Infinity, Infinity, 4)
                 } else {
-                    result = minimax(move, loBoards, humPlayer, 0, -Infinity, Infinity, 5)
+                    result = minimax(move, loBoards, humPlayer, 0, -Infinity, Infinity, 6)
                 }
                 loBoards[move.gloIndex][move.loIndex] = move.loIndex
                 // moves.push(move)
@@ -296,14 +296,7 @@ const AIplayer = function() {
                 }
             }
         }
-        // console.log(moves)
-        // for (let move of moves) {
-        //     if (move.score < minimumScore) {
-        //         minimumScore = move.score
-        //         bestMove = move
-        //     }
-        // }
-        // console.log(bestMove)
+     
         let gloIndex = bestMove.gloIndex
         let loIndex = bestMove.loIndex
         loBoards[gloIndex][loIndex] = 'O'
@@ -338,7 +331,7 @@ const AIplayer = function() {
                 result.textContent = "Player O wins!"
             } else if (winning(gloBoard, humPlayer)){
                 result.textContent = "Player X wins!"
-            } else if (allXorO(gloBoard)) {
+            } else if (!gloBoard.some(item => typeof item === 'number')) {
                 result.textContent = "Draw game!"
             }
         }
@@ -416,7 +409,7 @@ const cellChanges = function (nextBoard, index) {
             ttts[index].children[i].classList.remove('cellNA')
         }
     }
-    if (nextBoard.firstElementChild.classList.contains('cellW') || nextBoard.firstElementChild.classList.contains('cell2W')) {
+    if (nextBoard.firstElementChild.classList.contains('cellW') || nextBoard.firstElementChild.classList.contains('cell2W') || allXorO(nextBoard)) {
         cellNAs = document.querySelectorAll('.cellNA');
         for (let cellNA of cellNAs) {
             cellNA.classList.remove('cellNA')
@@ -490,7 +483,7 @@ for (let cell of cells) {
                 result.textContent = "Player O wins!"
             } else if (winning(gloBoard, humPlayer)){
                 result.textContent = "Player X wins!"
-            } else if (allXorO(gloBoard)) {
+            } else if (!gloBoard.some(item => typeof item === 'number')) {
                 result.textContent = "Draw game!"
             }
         } else {
