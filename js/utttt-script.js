@@ -296,7 +296,7 @@ const AIplayer = function() {
                 }
             }
         }
-     
+        result.textContent = ''
         let gloIndex = bestMove.gloIndex
         let loIndex = bestMove.loIndex
         loBoards[gloIndex][loIndex] = 'O'
@@ -487,7 +487,10 @@ for (let cell of cells) {
         } else if (!gloBoard.some(item => typeof item === 'number')) {
             result.textContent = "Draw game!"
         } else {
-            AIplayer() 
+            result.textContent = 'Minimax analyzing moves..'
+            setTimeout(() => {
+                AIplayer() 
+            }, 0);
         }
     })
     
