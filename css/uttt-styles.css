@@ -38,12 +38,11 @@ body {
 }
 #rules {
     width: 100%;
-    height: 100%;
+    height: min-content;
     text-align: -webkit-left;
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    padding-top: 2rem;
+    top: -1%;
     line-height: 150%;
     margin: auto;
     z-index: 2;
@@ -51,7 +50,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    place-content: center;
     user-select: text;
     display: none;
 }
