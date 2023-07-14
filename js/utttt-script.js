@@ -331,9 +331,9 @@ const AIplayer = function() {
                 result.textContent = "Player O wins!"
             } else if (winning(gloBoard, humPlayer)){
                 result.textContent = "Player X wins!"
-            } else if (!gloBoard.some(item => typeof item === 'number')) {
-                result.textContent = "Draw game!"
-            }
+            } 
+        } else if (!gloBoard.some(item => typeof item === 'number')) {
+            result.textContent = "Draw game!"
         }
     }
 }
@@ -483,9 +483,9 @@ for (let cell of cells) {
                 result.textContent = "Player O wins!"
             } else if (winning(gloBoard, humPlayer)){
                 result.textContent = "Player X wins!"
-            } else if (!gloBoard.some(item => typeof item === 'number')) {
-                result.textContent = "Draw game!"
             }
+        } else if (!gloBoard.some(item => typeof item === 'number')) {
+            result.textContent = "Draw game!"
         } else {
             AIplayer() 
         }
