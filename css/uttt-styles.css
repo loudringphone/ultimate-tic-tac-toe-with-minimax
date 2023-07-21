@@ -444,22 +444,6 @@ ul{
     padding: 2vw 0 3vh 0;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .main-content {
     position: absolute;
     top: 55%;
@@ -617,23 +601,19 @@ ul{
 }
 
 @media screen and (max-width: 1000px) {
-
     .sidebar1, .sidebar2 {
         display: none;
     }
-
     body {
         grid-template-rows: 1fr 1fr 5fr;
         grid-template-columns: 1fr;
     }
-    
     header{
         grid-column: 1/2;
         grid-row: 1/2;
         font-size: 1.2vh;
         height:2vh;
     }
-
     .sidebar3 {
         grid-column: 1/2;
         grid-row: 2/3;
@@ -655,35 +635,22 @@ ul{
         font-size: 6.5vw;
         height: inherit;
     }
-
     .main-content {
         grid-column: 1/2;
         grid-row: 3/4;
         top: 50%;
-        height: 94vw;
-        width: 94vw;
+        height: 40vw;
+        width: 40vw;
         margin: auto;
         grid-gap: 7.5px;
     }
-
     .TTT {
-        grid-gap: 0.5vw;
+        grid-gap: 0.3vw;
     }
-
     .cell {
-        width: 9.7vw;
-        height: 9.7vw;
+        width: 4vw;
+        height: 4vw;
     }
-
-    
-    
- 
-    
-   
-  
-
-      
-
     .charContainer {
         position: absolute;
         top: 50%;
@@ -691,7 +658,6 @@ ul{
         transform: translate(-50%, -50%);
         width: 80vw;
     }
-
     .btnClose {
         position:absolute;
         font-size: 3vh;
@@ -703,48 +669,70 @@ ul{
         cursor: pointer;
         line-height: 7vh;
     }
-   
-    
-    
     .congratsBG {
         margin-top: 15vh;
         margin: auto;
     }
-    
     .congratsText {
         font-size: 4vh;
         color: white;
     }
-    
     .btnRematch {
         font-size: 4vh;
         color: white;
     }
-
     .restarting {
         top: 45%;
         left: 52%
     }
-
     .restarting > h1 {
         font-size: 3vh;
     }
-
-
     .options {
         width: 80vw;
         height: 60vh;
         font-size: 5vw;     
     }
-
     .options > ul {
         line-height: 6vh;
     }
-
     .settings > img {
         left: 90%;
         height:3vh;
+    }
+}
 
+@media screen and (max-width: 900px) {
+    .main-content {
+        top: 55%;
+        height: 50vw;
+        width: 50vw;
+    }
+    .cell {
+        width: 5vw;
+        height: 5vw;
+    }
+}
 
+@media screen and (max-width: 680px) {
+    .main-content {
+        height: 70vw;
+        width: 70vw;
+    }
+    .cell {
+        width: 7vw;
+        height: 7vw;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .main-content {
+        top: 50%;
+        height: 94vw;
+        width: 94vw;
+    }
+    .cell {
+        width: 9.7vw;
+        height: 9.7vw;
     }
 }
