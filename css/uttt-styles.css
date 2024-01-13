@@ -76,47 +76,6 @@ a {
     text-decoration: inherit;
   }
 
-.btnChar {
-    position: absolute;
-    text-align: center;
-    cursor: pointer;
-    background-color: white;
-    font-size: 3.5vh;
-    padding: 12.5px;
-    border-radius: 12px;
-    top: 56%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 7;
-    background-color: lightslategray;
-    border-color: bisque;
-    color: lightgoldenrodyellow;
-    border-width: thick;
-    box-shadow: 0 0 10px 3px black;
-
-}
-
-.btnChar.AI {
-    top: 44%;   
-}
-
-.startScreen {
-    visibility: visible;
-    position: absolute;
-    background-color: lightgray;
-    opacity: 0.3;
-    text-align: center;
-    height: 80vh;
-    width: 80vh;
-    z-index: 6;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    outline-offset: 0.5em;  
-    
-}
-
-
 .disable {
     pointer-events: none;
 }
@@ -445,10 +404,6 @@ ul{
 }
 
 .main-content {
-    position: absolute;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
@@ -456,8 +411,6 @@ ul{
     background-color: gray;
     grid-gap: 10px;
     height: 53vh;
-
-    /* z-index: 3; */
 }
 
 
@@ -468,8 +421,6 @@ ul{
     grid-gap: 5px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    /* grid-column: 1/4;
-    grid-row: 1/4; */
 }
 
 
