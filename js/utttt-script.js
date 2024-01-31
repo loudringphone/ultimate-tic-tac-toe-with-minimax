@@ -296,16 +296,16 @@ const AIplayer = function() {
                 }
             }
         }
-        result.textContent = ''
+        result.textContent = '\u00A0'
         let gloIndex = bestMove.gloIndex
         let loIndex = bestMove.loIndex
         loBoards[gloIndex][loIndex] = 'O'
         ttts[gloIndex].children[loIndex].textContent = 'O';
         ttts[gloIndex].children[loIndex].classList.add('markO')
         let lastMove = document.querySelector('#lastMove');;
-        try {if (lastMove.id != null) {
-            lastMove.id = '';
-        }}catch{};
+        if (lastMove && lastMove.id != null) {
+                lastMove.id = '';
+        };
         ttts[gloIndex].children[loIndex].id = 'lastMove';
     
         cells.forEach(target =>
@@ -507,3 +507,26 @@ rulesClose.addEventListener('click', function() {
     rules.style.display = "none"
     rulesClose.style.display = "none"
 })
+
+const restartBtn = document.querySelector('#restart-btn')
+restartBtn.addEventListener('click', function() {
+    result.textContent = '\u00A0'
+    gloBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    loBoards = [
+        [0, 1, 2, 3, 4, 5, 6, 7, 8], [0, 1, 2, 3, 4, 5, 6, 7, 8], [0, 1, 2, 3, 4, 5, 6, 7, 8], 
+        [0, 1, 2, 3, 4, 5, 6, 7, 8], [0, 1, 2, 3, 4, 5, 6, 7, 8], [0, 1, 2, 3, 4, 5, 6, 7, 8], 
+        [0, 1, 2, 3, 4, 5, 6, 7, 8], [0, 1, 2, 3, 4, 5, 6, 7, 8], [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    ];
+    turn = 0
+    let lastMove = document.querySelector('#lastMove');;
+    if (lastMove && lastMove.id != null) {
+        lastMove.id = '';
+    };
+    const cells = main.querySelectorAll('.cell');
+
+    cells.forEach(cell => {
+        cell.classList.remove('markX', 'markO', 'cellNA', 'cellW', 'cell2W');
+        cell.textContent = ''
+    });
+})
+
