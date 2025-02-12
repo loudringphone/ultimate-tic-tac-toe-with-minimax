@@ -4,6 +4,8 @@
 }
 
 body {
+    display: flex;
+    flex-direction: column;
     margin: 0px;
     height: 100vh;
     font-family: 'Raleway', Arial, Helvetica, sans-serif;
@@ -12,16 +14,19 @@ body {
     text-align: -webkit-center;
     position: relative;
 }
-#result {
-    margin-top: 2%;
+#result {cd 
+    margin-top: 1%;
     font-size: x-large;
 }
 #restart-btn {
-    margin-top: 5%;
+    margin-bottom: 2%;
+    margin-top: 10%;
+    align-self: center;
+    width:fit-content;
     cursor: pointer;
 }
 #rules-btn {
-    margin-top: 5%;
+    margin-top: 1%;
     font-size: large;
     background: transparent;
     border: none;
@@ -139,10 +144,11 @@ span:active {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    height: 50vh;
     background-color: gray;
-    grid-gap: 10px;
-    height: 53vh;
+    grid-gap: 1.5%;
+    width: min(98vw, 98vh);
+    height: min(98vw, 98vh);
+    margin: 1% auto;
 }
 
 
@@ -163,8 +169,9 @@ span:active {
     justify-content: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 3vh;
-    height: 5.2vh;
-    width: 5vh;
+    height: 100%;
+    width: 100%;
+    place-self: center;
  
     
 }
@@ -283,139 +290,14 @@ span:active {
     font-size: 3vh;
 }
 
-@media screen and (max-width: 3000px) {
-    .sidebar1, .sidebar2 {
-        display: none;
-    }
-    body {
-        grid-template-rows: 1fr 1fr 5fr;
-        grid-template-columns: 1fr;
-    }
-    header{
-        grid-column: 1/2;
-        grid-row: 1/2;
-        font-size: 1.2vh;
-        height:2vh;
-    }
-    .sidebar3 {
-        grid-column: 1/2;
-        grid-row: 2/3;
-        width: 95vw;
-        height: inherit;
-        margin-top: 10%;
-        justify-content: space-between;
-
-
-    } 
-
-    .score {
-        font-size: 3.5vw;
-        padding-left: 10%;
-        
-    }
-    
-    .timer {
-        font-size: 6.5vw;
-        height: inherit;
-    }
-    .main-content {
-        grid-column: 1/2;
-        grid-row: 3/4;
-        top: 50%;
-        height: 40vw;
-        width: 40vw;
-        margin: auto;
-        grid-gap: 7.5px;
-    }
-    .TTT {
-        grid-gap: 0.3vw;
-    }
-    .cell {
-        width: 4vw;
-        height: 4vw;
-    }
-    .charContainer {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 80vw;
-    }
-    .btnClose {
-        position:absolute;
-        font-size: 3vh;
-        text-shadow: black 2px 0px 3px;
-        top: -5%;
-        left: 85%;
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
-        line-height: 7vh;
-    }
-    .congratsBG {
-        margin-top: 15vh;
-        margin: auto;
-    }
-    .congratsText {
-        font-size: 4vh;
-        color: white;
-    }
-    .btnRematch {
-        font-size: 4vh;
-        color: white;
-    }
-    .restarting {
-        top: 45%;
-        left: 52%
-    }
-    .restarting > h1 {
-        font-size: 3vh;
-    }
-    .options {
-        width: 80vw;
-        height: 60vh;
-        font-size: 5vw;     
-    }
-    .options > ul {
-        line-height: 6vh;
-    }
-    .settings > img {
-        left: 90%;
-        height:3vh;
-    }
-}
-
-@media screen and (max-width: 900px) {
-    .main-content {
-        top: 55%;
-        height: 50vw;
-        width: 50vw;
-    }
-    .cell {
-        width: 5vw;
-        height: 5vw;
-    }
-}
-
-@media screen and (max-width: 680px) {
-    .main-content {
-        height: 70vw;
-        width: 70vw;
-    }
-    .cell {
-        width: 7vw;
-        height: 7vw;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .main-content {
-        top: 50%;
-        height: 94vw;
-        width: 94vw;
-    }
-    .cell {
-        width: 9.7vw;
-        height: 9.7vw;
-    }
+.btnClose {
+    position:absolute;
+    font-size: 3vh;
+    text-shadow: black 2px 0px 3px;
+    top: -5%;
+    left: 85%;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    line-height: 7vh;
 }
