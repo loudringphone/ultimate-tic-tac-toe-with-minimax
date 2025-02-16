@@ -1,20 +1,19 @@
 * {
     user-select: none;
-    font-family: fantasy;
+    font-family: "Luminari", "Raleway", "Comic Sans MS";
 }
 
 body {
     display: flex;
     flex-direction: column;
     margin: 0px;
-    height: 100vh;
-    font-family: 'Raleway', Arial, Helvetica, sans-serif;
-    font-weight: bold;
+    height: 100dvh;
     background-color: beige;
     text-align: -webkit-center;
     position: relative;
 }
-#result {cd 
+#result {
+    font-weight: bold;
     margin-top: 1%;
     font-size: x-large;
 }
@@ -64,90 +63,25 @@ body {
 }
 
 #rules p {
-    font-weight: bold;
     font-size: medium;
     width: 80%;
     line-height: 200%;
     user-select: text;
 }
 
-.container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    grid-gap: 0px; 
-    height: 100vh;
-}
-
-
-a {
-    color: inherit; 
-    text-decoration: inherit;
-  }
-
-.disable {
-    pointer-events: none;
-}
-
-
-
-
 #lastMove {
     background-color: yellow;
 }
 
-
-
-.congratsBG {
-    visibility: hidden;
-    background-color: black;
-    margin: 0 6vw 0 6vw;
-    max-height: 40vh;
-    ;
-}
-
-.congratsText {
-    font-size: 10vh;
-    color: white;
-}
-
-.btnRematch {
-    font-size: 7vh;
-    color: white;
-}
-
-span {
-    color: red;
-}
-
-span:hover {
-    cursor: pointer;
-    color: yellow;
-}
-
-span:active {
-    cursor: pointer;
-    color: blue;
-}
-
-
-/* .congratsBG {
-    visibility: hidden;
-    background-color: black;
-    margin: 0 6vw 0 6vw;
-    max-height: 40vh;
-    opacity: 1;
-    ;
-} */
-
 .main-content {
+    font-weight: bold;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     background-color: gray;
     grid-gap: 1.5%;
-    width: min(98vw, 98vh);
-    height: min(98vw, 98vh);
+    width: min(90dvw, 90dvh);
+    height: min(90dvw, 90dvh);
     margin: 1% auto;
 }
 
@@ -168,7 +102,7 @@ span:active {
     display: flex;
     justify-content: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 3vh;
+    font-size: 3dvh;
     height: 100%;
     width: 100%;
     place-self: center;
@@ -192,9 +126,8 @@ span:active {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    line-height: 3vh;
-    font-size: 3vh;
+    line-height: 3dvh;
+    font-size: 3dvh;
 }
 
 .markX.cell2W {
@@ -204,9 +137,8 @@ span:active {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    line-height: 3vh;
-    font-size: 3vh;
+    line-height: 3dvh;
+    font-size: 3dvh;
 
 }
 
@@ -217,9 +149,8 @@ span:active {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    line-height: 3vh;
-    font-size: 3vh;
+    line-height: 3dvh;
+    font-size: 3dvh;
 }
 
 .markO.cell2W {
@@ -229,9 +160,8 @@ span:active {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 3vh;
-    line-height: 3vh;
+    font-size: 3dvh;
+    line-height: 3dvh;
 }
 
 .cellW {
@@ -254,8 +184,7 @@ span:active {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 3vh;
+    font-size: 3dvh;
     pointer-events: none;
 }
 
@@ -265,8 +194,7 @@ span:active {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    line-height: 3vh;
+    line-height: 3dvh;
     pointer-events: none;
 }
 
@@ -275,29 +203,26 @@ span:active {
     color: white;
     display: flex;
     justify-content: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 0;
     pointer-events: none;
 }
-
-
 
 .cell2:hover
 {
     background-color: lightpink;
     color: gray;
     cursor: pointer;
-    font-size: 3vh;
+    font-size: 3dvh;
 }
 
 .btnClose {
     position:absolute;
-    font-size: 3vh;
+    font-size: 3dvh;
     text-shadow: black 2px 0px 3px;
     top: -5%;
     left: 85%;
     border: none;
     background-color: transparent;
     cursor: pointer;
-    line-height: 7vh;
+    line-height: 7dvh;
 }
