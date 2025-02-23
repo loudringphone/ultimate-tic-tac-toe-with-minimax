@@ -7,8 +7,8 @@ body {
     display: flex;
     flex-direction: column;
     margin: 0px;
-    height: 100dvh;
-    width: 100dvw;
+    height: 100vh;
+    width: 100vw;
     background-color: beige;
     text-align: -webkit-center;
     position: relative;
@@ -81,8 +81,8 @@ body {
     grid-template-rows: repeat(3, 1fr);
     background-color: gray;
     grid-gap: 1.5%;
-    width: min(90dvw, 90dvh);
-    height: min(90dvw, 90dvh);
+    width: min(90vw, 90vh);
+    height: min(90vw, 90vh);
     margin: 1% auto;
 }
 
@@ -103,7 +103,7 @@ body {
     display: flex;
     justify-content: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 3dvh;
+    font-size: 3vh;
     height: 100%;
     width: 100%;
     place-self: center;
@@ -127,8 +127,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 3dvh;
-    font-size: 3dvh;
+    line-height: 3vh;
+    font-size: 3vh;
 }
 
 .markX.cell2W {
@@ -138,8 +138,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 3dvh;
-    font-size: 3dvh;
+    line-height: 3vh;
+    font-size: 3vh;
 
 }
 
@@ -150,8 +150,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 3dvh;
-    font-size: 3dvh;
+    line-height: 3vh;
+    font-size: 3vh;
 }
 
 .markO.cell2W {
@@ -161,8 +161,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3dvh;
-    line-height: 3dvh;
+    font-size: 3vh;
+    line-height: 3vh;
 }
 
 .cellW {
@@ -185,7 +185,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3dvh;
+    font-size: 3vh;
     pointer-events: none;
 }
 
@@ -195,7 +195,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 3dvh;
+    line-height: 3vh;
     pointer-events: none;
 }
 
@@ -213,17 +213,17 @@ body {
     background-color: lightpink;
     color: gray;
     cursor: pointer;
-    font-size: 3dvh;
+    font-size: 3vh;
 }
 
 .btnClose {
     position:absolute;
-    font-size: 3dvh;
+    font-size: 3vh;
     text-shadow: black 2px 0px 3px;
     top: -5%;
     left: 85%;
     border: none;
     background-color: transparent;
     cursor: pointer;
-    line-height: 7dvh;
+    line-height: 7vh;
 }
