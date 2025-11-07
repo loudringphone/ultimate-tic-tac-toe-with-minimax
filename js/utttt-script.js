@@ -34,7 +34,7 @@ const winning = function(board, player) {
         (board[1] == player && board[4] == player && board[7] == player) ||
         (board[2] == player && board[5] == player && board[8] == player) ||
         (board[0] == player && board[4] == player && board[8] == player) ||
-        (board[2] == player && board[4] == player && board[6] == player)) 
+        (board[2] == player && board[4] == player && board[6] == player))
     ) {
         return true;
     } else {
@@ -43,9 +43,7 @@ const winning = function(board, player) {
 }
 
 const allXorO = function(board) {
-    if (Array.isArray(board)) {
-        return board.every((cell) => cell === 'X' || cell === 'O');
-    }
+    return board.every((cell) => cell === 'X' || cell === 'O');
   }
 
 const minimax = function(mo, los, player, depth, alpha, beta, maxDepth) {
@@ -273,7 +271,6 @@ const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 const AIplayer = function() {
     if (turn % 2 != 0) {
         let emptySpotsInLoBoards = emptyLoIndices(openBoards, loBoards);
-        // let moves = []
         let minimumScore = Infinity;
         let bestMove
         for (let o = 0; o < openBoards.length; o++) {
@@ -289,7 +286,6 @@ const AIplayer = function() {
                     result = minimax(move, loBoards, humPlayer, 0, -Infinity, Infinity, 6)
                 }
                 loBoards[move.gloIndex][move.loIndex] = move.loIndex
-                // moves.push(move)
                 if (result.score < minimumScore) {
                     minimumScore = result.score;
                     bestMove = {gloIndex: move.gloIndex, loIndex: move.loIndex, score: result.score};
@@ -386,13 +382,13 @@ const cellChanges = function (nextBoard, index) {
         if (main.children[i] != nextBoard && (!main.children[i].firstElementChild.classList.contains('cellW') && !main.children[i].firstElementChild.classList.contains('cell2W'))) {
             for (let j = 0; j < 9; j++) {
                 if (!main.children[i].children[j].classList.contains('markX') && !main.children[i].children[j].classList.contains('markO')) {
-                    main.children[i].children[j].classList.add('cellNA');  
+                    main.children[i].children[j].classList.add('cellNA');
                 }
-            }   
+            }
         } else {
             for (let j = 0; j < 9; j++) {
                 main.children[i].children[j].classList.remove('cellNA');
-            }  
+            }
         }
     }
     if (winning(loBoards[index], humPlayer)){
@@ -409,7 +405,9 @@ const cellChanges = function (nextBoard, index) {
             ttts[index].children[i].classList.remove('cellNA')
         }
     }
-    if (nextBoard.firstElementChild.classList.contains('cellW') || nextBoard.firstElementChild.classList.contains('cell2W') || allXorO(nextBoard)) {
+    const nextCells = nextBoard.children;
+    const nextCellsVals = Array.from(nextCells).map(cell => cell.textContent.trim());
+    if (nextBoard.firstElementChild.classList.contains('cellW') || nextBoard.firstElementChild.classList.contains('cell2W') || allXorO(nextCellsVals)) {
         cellNAs = document.querySelectorAll('.cellNA');
         for (let cellNA of cellNAs) {
             cellNA.classList.remove('cellNA')
@@ -432,7 +430,7 @@ for (let cell of cells) {
         for (let i = 0; i < main.children.length; i++) {
             if (main.children[i] === targetBoard) {
                 gloIndex = i;
-            } 
+            }
         }
         for (let i = 0; i < targetBoard.children.length; i++) {
             if (targetBoard.children[i] === cell) {
@@ -446,18 +444,16 @@ for (let cell of cells) {
             loBoards[gloIndex][loIndex] = 'X';
             cell.textContent = 'X';
             cell.classList.add('markX')
-            cells.forEach(target =>
-                target.classList.toggle('cell2'))
         }
         else {
             loBoards[gloIndex][loIndex] = 'O'
             cell.textContent = 'O';
             cell.classList.add('markO')
-            cells.forEach(target =>
-                target.classList.toggle('cell2'))
         }
+        cells.forEach(target =>
+            target.classList.toggle('cell2'))
+
         let nextBoard = main.children[loIndex];
-        
         cellChanges(nextBoard, gloIndex)
         gloBoardIndex(loIndex)
 
