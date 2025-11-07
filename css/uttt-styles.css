@@ -81,8 +81,8 @@ body {
     grid-template-rows: repeat(3, 1fr);
     background-color: gray;
     grid-gap: 1.5%;
-    width: min(90vw, 90vh);
     height: min(90vw, 90vh);
+    aspect-ratio: 1 / 1;
     margin: 1% auto;
 }
 
